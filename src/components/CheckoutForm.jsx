@@ -89,18 +89,16 @@ const handlePlaceOrder = () => {
       phone: form.phone,
     },
 
-    shippingAddress: {
+    address: {
       address: form.address,
       city: form.city,
       postalCode: form.postalCode,
     },
 
     items: cart,
-
     subtotal: cartTotal,
     shipping,
     total,
-
     paymentMethod: "Cash on Delivery",
   });
 
@@ -112,15 +110,8 @@ const handlePlaceOrder = () => {
   }
 
   setOrderId(order.id);
-
   clearCart();
-
   setStep(3);
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
 };
 
 

@@ -122,7 +122,7 @@ export default function OrderDetailsPage() {
                   >
                     {!isLast && (
                       <div
-                        className={`absolute left-[15px] top-8 h-full w-px ${
+                        className={`absolute left-3.75 top-8 h-full w-px ${
                           index <
                           tracking.current
                             ? "bg-lime-300"
@@ -185,6 +185,7 @@ export default function OrderDetailsPage() {
                 <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#f3f3ee]">
                   {(item.thumbnail ||
                     item.image) && (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={
                         item.thumbnail ||
@@ -261,7 +262,7 @@ export default function OrderDetailsPage() {
                   Subtotal
                 </span>
 
-                <span className="font-medium">
+                <span className="font-medium text-gray-400">
                   $
                   {Number(
                     order.subtotal
@@ -274,7 +275,7 @@ export default function OrderDetailsPage() {
                   Shipping
                 </span>
 
-                <span className="font-medium">
+                <span className="font-medium  text-gray-400">
                   {order.shipping === 0
                     ? "Free"
                     : `$${Number(
@@ -285,11 +286,11 @@ export default function OrderDetailsPage() {
 
               <div className="border-t border-gray-100 pt-4">
                 <div className="flex justify-between">
-                  <span className="font-bold">
+                  <span className="font-bold text-gray-600">
                     Total
                   </span>
 
-                  <span className="text-2xl font-black">
+                  <span className="text-2xl font-black text-black">
                     $
                     {Number(
                       order.total
