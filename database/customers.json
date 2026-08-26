@@ -1,0 +1,34 @@
+[
+  {
+    "id": "cust-001",
+    "firstName": "Alex",
+    "lastName": "Morgan",
+    "email": "alex.morgan@example.com",
+    "phone": "+1 555 010 1001",
+    "avatar": "https://i.pravatar.cc/150?img=12",
+    "address": {
+      "street": "125 Market Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10001",
+      "country": "United States"
+    },
+    "createdAt": "2026-01-15T10:30:00Z"
+  },
+  {
+    "id": "cust-002",
+    "firstName": "Jordan",
+    "lastName": "Lee",
+    "email": "jordan.lee@example.com",
+    "phone": "+1 555 010 1002",
+    "avatar": "https://i.pravatar.cc/150?img=33",
+    "address": {
+      "street": "48 Sunset Avenue",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90001",
+      "country": "United States"
+    },
+    "createdAt": "2026-02-10T14:20:00Z"
+  }
+]

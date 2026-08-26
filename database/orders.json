@@ -1,0 +1,232 @@
+[
+  {
+    "id": "ord-1001",
+    "orderNumber": "NX-1001",
+    "customerId": "cust-001",
+    "status": "Delivered",
+    "items": [
+      {
+        "productId": "prod-001",
+        "name": "Aero Runner X1",
+        "quantity": 1,
+        "price": 99,
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85",
+        "variant": {
+          "size": "10",
+          "color": "Black"
+        }
+      },
+      {
+        "productId": "prod-003",
+        "name": "Essential Oversized Tee",
+        "quantity": 2,
+        "price": 39,
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=85",
+        "variant": {
+          "size": "L",
+          "color": "Black"
+        }
+      }
+    ],
+    "subtotal": 177,
+    "shipping": 10,
+    "discount": 0,
+    "total": 187,
+    "currency": "USD",
+    "shippingAddress": {
+      "street": "125 Market Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10001",
+      "country": "United States"
+    },
+    "timeline": [
+      {
+        "status": "Order Placed",
+        "date": "2026-08-10T09:30:00Z",
+        "completed": true
+      },
+      {
+        "status": "Confirmed",
+        "date": "2026-08-10T11:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Shipped",
+        "date": "2026-08-11T08:30:00Z",
+        "completed": true
+      },
+      {
+        "status": "Out for Delivery",
+        "date": "2026-08-13T07:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Delivered",
+        "date": "2026-08-13T15:30:00Z",
+        "completed": true
+      }
+    ],
+    "createdAt": "2026-08-10T09:30:00Z"
+  },
+  {
+    "id": "ord-1002",
+    "orderNumber": "NX-1002",
+    "customerId": "cust-001",
+    "status": "Pending",
+    "items": [
+      {
+        "productId": "prod-006",
+        "name": "Classic Chrono Watch",
+        "quantity": 1,
+        "price": 199,
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85",
+        "variant": {
+          "color": "Silver"
+        }
+      }
+    ],
+    "subtotal": 199,
+    "shipping": 10,
+    "discount": 0,
+    "total": 209,
+    "currency": "USD",
+    "shippingAddress": {
+      "street": "125 Market Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10001",
+      "country": "United States"
+    },
+    "timeline": [
+      {
+        "status": "Order Placed",
+        "date": "2026-08-23T10:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Confirmed",
+        "date": "2026-08-23T11:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Shipped",
+        "date": null,
+        "completed": false
+      },
+      {
+        "status": "Out for Delivery",
+        "date": null,
+        "completed": false
+      },
+      {
+        "status": "Delivered",
+        "date": null,
+        "completed": false
+      }
+    ],
+    "createdAt": "2026-08-23T10:00:00Z"
+  },
+  {
+    "id": "ord-1003",
+    "orderNumber": "NX-1003",
+    "customerId": "cust-002",
+    "status": "Cancelled",
+    "items": [
+      {
+        "productId": "prod-004",
+        "name": "Daily Relaxed Hoodie",
+        "quantity": 1,
+        "price": 89,
+        "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85",
+        "variant": {
+          "size": "M",
+          "color": "Grey"
+        }
+      }
+    ],
+    "subtotal": 89,
+    "shipping": 10,
+    "discount": 0,
+    "total": 99,
+    "currency": "USD",
+    "shippingAddress": {
+      "street": "48 Sunset Avenue",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90001",
+      "country": "United States"
+    },
+    "timeline": [
+      {
+        "status": "Order Placed",
+        "date": "2026-08-18T12:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Cancelled",
+        "date": "2026-08-18T16:30:00Z",
+        "completed": true
+      }
+    ],
+    "createdAt": "2026-08-18T12:00:00Z"
+  },
+  {
+    "id": "ord-1004",
+    "orderNumber": "NX-1004",
+    "customerId": "cust-002",
+    "status": "Returned",
+    "items": [
+      {
+        "productId": "prod-005",
+        "name": "Minimal Leather Wallet",
+        "quantity": 1,
+        "price": 35,
+        "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=85",
+        "variant": {
+          "color": "Brown"
+        }
+      }
+    ],
+    "subtotal": 35,
+    "shipping": 10,
+    "discount": 0,
+    "total": 45,
+    "currency": "USD",
+    "shippingAddress": {
+      "street": "48 Sunset Avenue",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90001",
+      "country": "United States"
+    },
+    "timeline": [
+      {
+        "status": "Order Placed",
+        "date": "2026-07-20T10:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Confirmed",
+        "date": "2026-07-20T12:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Shipped",
+        "date": "2026-07-21T08:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Delivered",
+        "date": "2026-07-24T14:00:00Z",
+        "completed": true
+      },
+      {
+        "status": "Returned",
+        "date": "2026-07-29T11:00:00Z",
+        "completed": true
+      }
+    ],
+    "createdAt": "2026-07-20T10:00:00Z"
+  }
+]

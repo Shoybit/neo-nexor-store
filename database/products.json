@@ -1,0 +1,277 @@
+[
+  {
+    "id": "prod-001",
+    "name": "Aero Runner X1",
+    "slug": "aero-runner-x1",
+    "description": "Lightweight everyday sneakers designed for comfort, movement and modern street style.",
+    "shortDescription": "Lightweight sneakers for everyday movement.",
+    "brand": "Aero",
+    "categoryId": "cat-001",
+    "category": "Sneakers",
+    "price": 129,
+    "salePrice": 99,
+    "currency": "USD",
+    "sku": "AERO-X1-BLK",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "size",
+        "options": ["7", "8", "9", "10", "11"]
+      },
+      {
+        "type": "color",
+        "options": ["Black", "White"]
+      }
+    ],
+    "stock": 42,
+    "rating": 4.8,
+    "reviewCount": 124,
+    "featured": true,
+    "isNew": true,
+    "isOnSale": true,
+    "status": "active"
+  },
+  {
+    "id": "prod-002",
+    "name": "Urban Flex Sneaker",
+    "slug": "urban-flex-sneaker",
+    "description": "A versatile sneaker combining everyday comfort with a clean contemporary silhouette.",
+    "shortDescription": "Clean everyday sneakers with flexible comfort.",
+    "brand": "UrbanStep",
+    "categoryId": "cat-001",
+    "category": "Sneakers",
+    "price": 110,
+    "salePrice": null,
+    "currency": "USD",
+    "sku": "URB-FLX-WHT",
+    "images": [
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "size",
+        "options": ["7", "8", "9", "10", "11"]
+      },
+      {
+        "type": "color",
+        "options": ["White", "Grey"]
+      }
+    ],
+    "stock": 28,
+    "rating": 4.6,
+    "reviewCount": 87,
+    "featured": true,
+    "isNew": false,
+    "isOnSale": false,
+    "status": "active"
+  },
+  {
+    "id": "prod-003",
+    "name": "Essential Oversized Tee",
+    "slug": "essential-oversized-tee",
+    "description": "Premium cotton oversized t-shirt with a relaxed fit and soft finish.",
+    "shortDescription": "Premium cotton oversized t-shirt.",
+    "brand": "NeoWear",
+    "categoryId": "cat-002",
+    "category": "Clothing",
+    "price": 55,
+    "salePrice": 39,
+    "currency": "USD",
+    "sku": "NEO-TEE-BLK",
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "size",
+        "options": ["S", "M", "L", "XL"]
+      },
+      {
+        "type": "color",
+        "options": ["Black", "Cream", "Grey"]
+      }
+    ],
+    "stock": 75,
+    "rating": 4.7,
+    "reviewCount": 203,
+    "featured": true,
+    "isNew": true,
+    "isOnSale": true,
+    "status": "active"
+  },
+  {
+    "id": "prod-004",
+    "name": "Daily Relaxed Hoodie",
+    "slug": "daily-relaxed-hoodie",
+    "description": "A soft heavyweight hoodie built for relaxed everyday wear.",
+    "shortDescription": "Soft heavyweight hoodie for everyday comfort.",
+    "brand": "NeoWear",
+    "categoryId": "cat-002",
+    "category": "Clothing",
+    "price": 89,
+    "salePrice": null,
+    "currency": "USD",
+    "sku": "NEO-HOOD-GRY",
+    "images": [
+      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "size",
+        "options": ["S", "M", "L", "XL"]
+      },
+      {
+        "type": "color",
+        "options": ["Grey", "Black"]
+      }
+    ],
+    "stock": 31,
+    "rating": 4.9,
+    "reviewCount": 156,
+    "featured": false,
+    "isNew": true,
+    "isOnSale": false,
+    "status": "active"
+  },
+  {
+    "id": "prod-005",
+    "name": "Minimal Leather Wallet",
+    "slug": "minimal-leather-wallet",
+    "description": "Slim genuine leather wallet designed for everyday essentials.",
+    "shortDescription": "Slim leather wallet with a minimal design.",
+    "brand": "Form",
+    "categoryId": "cat-003",
+    "category": "Accessories",
+    "price": 49,
+    "salePrice": 35,
+    "currency": "USD",
+    "sku": "FORM-WAL-BRN",
+    "images": [
+      "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "color",
+        "options": ["Brown", "Black"]
+      }
+    ],
+    "stock": 63,
+    "rating": 4.5,
+    "reviewCount": 91,
+    "featured": false,
+    "isNew": false,
+    "isOnSale": true,
+    "status": "active"
+  },
+  {
+    "id": "prod-006",
+    "name": "Classic Chrono Watch",
+    "slug": "classic-chrono-watch",
+    "description": "A timeless chronograph watch with a refined stainless steel case.",
+    "shortDescription": "Classic stainless steel chronograph watch.",
+    "brand": "Chrono",
+    "categoryId": "cat-004",
+    "category": "Watches",
+    "price": 249,
+    "salePrice": 199,
+    "currency": "USD",
+    "sku": "CHR-001-SLV",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "color",
+        "options": ["Silver", "Black"]
+      }
+    ],
+    "stock": 16,
+    "rating": 4.9,
+    "reviewCount": 76,
+    "featured": true,
+    "isNew": false,
+    "isOnSale": true,
+    "status": "active"
+  },
+  {
+    "id": "prod-007",
+    "name": "Canvas Everyday Backpack",
+    "slug": "canvas-everyday-backpack",
+    "description": "Durable canvas backpack with a spacious interior for work and everyday travel.",
+    "shortDescription": "Durable everyday backpack with modern styling.",
+    "brand": "Form",
+    "categoryId": "cat-003",
+    "category": "Accessories",
+    "price": 79,
+    "salePrice": null,
+    "currency": "USD",
+    "sku": "FORM-BAG-OLV",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1581605405669-fcdf81165afa?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "color",
+        "options": ["Olive", "Black", "Beige"]
+      }
+    ],
+    "stock": 24,
+    "rating": 4.6,
+    "reviewCount": 68,
+    "featured": false,
+    "isNew": true,
+    "isOnSale": false,
+    "status": "active"
+  },
+  {
+    "id": "prod-008",
+    "name": "Performance Runner Pro",
+    "slug": "performance-runner-pro",
+    "description": "Responsive performance running shoes built for daily training and long-distance comfort.",
+    "shortDescription": "Responsive running shoes for daily training.",
+    "brand": "Aero",
+    "categoryId": "cat-001",
+    "category": "Sneakers",
+    "price": 159,
+    "salePrice": 129,
+    "currency": "USD",
+    "sku": "AERO-PRO-BLU",
+    "images": [
+      "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=1200&q=85",
+      "https://images.unsplash.com/photo-1554130847-1c4e7c4f8a0b?auto=format&fit=crop&w=1200&q=85"
+    ],
+    "thumbnail": "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=800&q=85",
+    "variants": [
+      {
+        "type": "size",
+        "options": ["7", "8", "9", "10", "11", "12"]
+      },
+      {
+        "type": "color",
+        "options": ["Blue", "Black"]
+      }
+    ],
+    "stock": 35,
+    "rating": 4.8,
+    "reviewCount": 142,
+    "featured": true,
+    "isNew": true,
+    "isOnSale": true,
+    "status": "active"
+  }
+]
