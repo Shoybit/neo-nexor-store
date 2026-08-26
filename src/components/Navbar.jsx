@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -53,9 +54,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-black tracking-[-0.06em]"
+            className="text-xl font-black tracking-[-0.06em] text-black sm:text-2xl"
           >
-            NEO<span className="text-lime-500">•</span>NEXOR
+            NEO<span className="text-lime-400">·</span>NEXOR
           </Link>
 
           {/* Navigation */}
@@ -66,21 +67,18 @@ export default function Navbar() {
             >
               Home
             </Link>
-
             <Link
               href="/shop"
               className="text-sm font-medium text-gray-600 transition hover:text-black"
             >
               Shop
             </Link>
-
             <Link
               href="/shop?category=sneakers"
               className="text-sm font-medium text-gray-600 transition hover:text-black"
             >
               Sneakers
             </Link>
-
             <Link
               href="/shop?category=clothing"
               className="text-sm font-medium text-gray-600 transition hover:text-black"
@@ -107,7 +105,6 @@ export default function Navbar() {
               aria-label="Wishlist"
             >
               <Heart size={20} />
-
               {wishlist.length > 0 && (
                 <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-lime-400 px-1 text-[9px] font-bold text-black">
                   {wishlist.length}
@@ -132,7 +129,6 @@ export default function Navbar() {
               aria-label="Shopping cart"
             >
               <ShoppingBag size={20} />
-
               {cartCount > 0 && (
                 <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-lime-400 px-1 text-[9px] font-bold text-black">
                   {cartCount}
@@ -154,34 +150,26 @@ export default function Navbar() {
       {/* Side Drawer */}
       <aside
         className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-300 ${
-          activePanel
-            ? "translate-x-0"
-            : "translate-x-full"
+          activePanel ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-black/10 px-6 py-5">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-black/40">
-              {activePanel === "cart"
-                ? "Your Items"
-                : "Saved Items"}
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gray-400">
+              {activePanel === "cart" ? "Your Items" : "Saved Items"}
             </p>
-
-            <h2 className="mt-1 text-xl font-black">
-              {activePanel === "cart"
-                ? "Shopping Cart"
-                : "Wishlist"}
+            <h2 className="mt-1 text-xl font-black text-black">
+              {activePanel === "cart" ? "Shopping Cart" : "Wishlist"}
             </h2>
           </div>
-
           <button
             type="button"
             onClick={closePanel}
             className="rounded-full p-2 transition hover:bg-black/5"
             aria-label="Close"
           >
-            <X size={20} />
+            <X size={20} className="text-gray-600" />
           </button>
         </div>
 
@@ -209,20 +197,16 @@ export default function Navbar() {
                         className="h-full w-full object-cover"
                       />
                     </div>
-
                     <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-black/40">
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
                         {product.category}
                       </p>
-
-                      <h3 className="mt-1 line-clamp-2 text-sm font-bold">
+                      <h3 className="mt-1 line-clamp-2 text-sm font-bold text-black">
                         {product.name}
                       </h3>
-
-                      <p className="mt-2 font-bold">
+                      <p className="mt-2 font-bold text-black">
                         ${product.salePrice || product.price}
                       </p>
-
                       <div className="mt-3 flex items-center gap-3">
                         <button
                           type="button"
@@ -234,11 +218,10 @@ export default function Navbar() {
                         >
                           Add to Cart
                         </button>
-
                         <button
                           type="button"
                           onClick={() => toggleWishlist(product)}
-                          className="text-xs font-medium text-black/40 hover:text-red-500"
+                          className="text-xs font-medium text-gray-400 transition hover:text-red-500"
                         >
                           Remove
                         </button>
@@ -265,9 +248,7 @@ export default function Navbar() {
               ) : (
                 <div className="space-y-5">
                   {cart.map((product) => {
-                    const productPrice =
-                      product.salePrice || product.price;
-
+                    const productPrice = product.salePrice || product.price;
                     return (
                       <div
                         key={product.id}
@@ -275,31 +256,23 @@ export default function Navbar() {
                       >
                         <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-[#f3f3ee]">
                           <img
-                            src={
-                              product.thumbnail ||
-                              product.image
-                            }
+                            src={product.thumbnail || product.image}
                             alt={product.name}
                             className="h-full w-full object-cover"
                           />
                         </div>
-
                         <div className="min-w-0 flex-1">
-                          <p className="text-[10px] font-medium uppercase tracking-wider text-black/40">
+                          <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
                             {product.category}
                           </p>
-
-                          <h3 className="mt-1 line-clamp-2 text-sm font-bold">
+                          <h3 className="mt-1 line-clamp-2 text-sm font-bold text-black">
                             {product.name}
                           </h3>
-
-                          <p className="mt-2 text-sm font-bold">
+                          <p className="mt-2 text-sm font-bold text-black">
                             ${productPrice}
                           </p>
-
-                          {/* Quantity */}
                           <div className="mt-3 flex items-center justify-between">
-                            <div className="flex items-center rounded-full border border-black/10">
+                            <div className="flex items-center rounded-full border border-gray-200">
                               <button
                                 type="button"
                                 onClick={() =>
@@ -308,15 +281,13 @@ export default function Navbar() {
                                     product.quantity - 1
                                   )
                                 }
-                                className="p-2 text-black/50 hover:text-black"
+                                className="p-2 text-gray-400 transition hover:text-black"
                               >
                                 <Minus size={13} />
                               </button>
-
-                              <span className="min-w-7 text-center text-xs font-semibold">
+                              <span className="min-w-7 text-center text-xs font-semibold text-black">
                                 {product.quantity}
                               </span>
-
                               <button
                                 type="button"
                                 onClick={() =>
@@ -325,18 +296,15 @@ export default function Navbar() {
                                     product.quantity + 1
                                   )
                                 }
-                                className="p-2 text-black/50 hover:text-black"
+                                className="p-2 text-gray-400 transition hover:text-black"
                               >
                                 <Plus size={13} />
                               </button>
                             </div>
-
                             <button
                               type="button"
-                              onClick={() =>
-                                removeFromCart(product.id)
-                              }
-                              className="text-black/30 transition hover:text-red-500"
+                              onClick={() => removeFromCart(product.id)}
+                              className="text-gray-300 transition hover:text-red-500"
                               aria-label="Remove product"
                             >
                               <Trash2 size={16} />
@@ -354,22 +322,18 @@ export default function Navbar() {
             {cart.length > 0 && (
               <div className="border-t border-black/10 p-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-black/50">
-                    Subtotal
-                  </span>
-
-                  <span className="text-xl font-black">
+                  <span className="text-sm text-gray-500">Subtotal</span>
+                  <span className="text-xl font-black text-black">
                     ${cartTotal.toFixed(2)}
                   </span>
                 </div>
-
-                <button
-                  type="button"
-                  className="mt-5 w-full rounded-full bg-black py-3.5 text-sm font-semibold text-white transition hover:bg-lime-400 hover:text-black"
-                >
-                  Checkout
-                </button>
-              </div>
+              <Link
+                href="/checkout"
+                className="mt-5 flex w-full items-center justify-center rounded-full bg-black py-3.5 text-sm font-semibold text-white transition hover:bg-lime-400 hover:text-black"
+              >
+                Checkout
+              </Link>
+             </div>
             )}
           </>
         )}
@@ -379,26 +343,18 @@ export default function Navbar() {
 }
 
 /* Empty State */
-function EmptyState({
-  icon,
-  title,
-  description,
-  onClose,
-}) {
+function EmptyState({ icon, title, description, onClose }) {
   return (
     <div className="flex h-full flex-col items-center justify-center text-center">
-      <div className="rounded-full bg-black/5 p-4 text-black/40">
+      <div className="rounded-full bg-black/5 p-4 text-gray-400">
         {icon}
       </div>
-
-      <h3 className="mt-5 text-lg font-bold">
+      <h3 className="mt-5 text-lg font-bold text-black">
         {title}
       </h3>
-
-      <p className="mt-2 max-w-xs text-sm leading-6 text-black/40">
+      <p className="mt-2 max-w-xs text-sm leading-6 text-gray-400">
         {description}
       </p>
-
       <Link
         href="/shop"
         onClick={onClose}
