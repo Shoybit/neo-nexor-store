@@ -1,29 +1,20 @@
-import products from "../../database/products.json";
-import categories from "../../database/categories.json";
-import customers from "../../database/customers.json";
-import orders from "../../database/orders.json";
+import products from "@/../database/products.json";
+import categories from "@/../database/categories.json";
 
 export function getAllProducts() {
   return products;
 }
 
 export function getFeaturedProducts() {
-  return products
-    .filter((product) => product.featured === true)
-    .slice(0, 4);
+  return products.filter((product) => product.featured);
 }
 
 export function getProductById(id) {
-  return products.find(
-    (product) => String(product.id) === String(id)
-  );
+  return products.find((product) => product.id === id);
 }
 
-export function getProductsByCategory(category) {
-  return products.filter(
-    (product) =>
-      product.category?.toLowerCase() === category?.toLowerCase()
-  );
+export function getProductBySlug(slug) {
+  return products.find((product) => product.slug === slug);
 }
 
 export function getAllCategories() {
@@ -31,21 +22,13 @@ export function getAllCategories() {
 }
 
 export function getCategoryBySlug(slug) {
-  return categories.find(
-    (category) => category.slug === slug
-  );
+  return categories.find((category) => category.slug === slug);
 }
 
-export function getAllCustomers() {
-  return customers;
+export function getProductsByCategory(categoryId) {
+  return products.filter((product) => product.categoryId === categoryId);
 }
 
-export function getAllOrders() {
-  return orders;
-}
-
-export function getOrderById(id) {
-  return orders.find(
-    (order) => String(order.id) === String(id)
-  );
+export function getAllBrands() {
+  return [...new Set(products.map((product) => product.brand))];
 }
