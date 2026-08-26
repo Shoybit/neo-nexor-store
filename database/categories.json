@@ -3,28 +3,24 @@
     "id": "cat-001",
     "name": "Sneakers",
     "slug": "sneakers",
-    "description": "Modern sneakers for everyday style and comfort.",
-    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85"
+    "icon": "👟",
+    "count": 24,
+    "href": "/shop?category=sneakers"
   },
   {
     "id": "cat-002",
     "name": "Clothing",
     "slug": "clothing",
-    "description": "Comfortable and stylish everyday clothing.",
-    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85"
+    "icon": "👕",
+    "count": 18,
+    "href": "/shop?category=clothing"
   },
   {
     "id": "cat-003",
     "name": "Accessories",
     "slug": "accessories",
-    "description": "Complete your look with premium accessories.",
-    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1000&q=85"
-  },
-  {
-    "id": "cat-004",
-    "name": "Watches",
-    "slug": "watches",
-    "description": "Minimal and premium watches for every occasion.",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85"
+    "icon": "🎒",
+    "count": 12,
+    "href": "/shop?category=accessories"
   }
 ]
