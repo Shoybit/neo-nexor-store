@@ -2,6 +2,7 @@ import Link from "next/link";
 import products from "../../../../database/products.json";
 import ProductContent from "./ProductContent";
 
+
 export default async function ProductDetails({ params }) {
   const { slug } = await params;
 

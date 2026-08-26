@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useStore } from "@/context/StoreContext";
 import {
   ArrowLeft,
   Heart,
@@ -48,6 +49,14 @@ export default function ProductContent({ product }) {
       setQuantity((prev) => prev - 1);
     }
   };
+
+  const {
+  addToCart,
+  toggleWishlist,
+  isInWishlist,
+} = useStore();
+
+const wishlisted = isInWishlist(product.id);
 
   return (
     <main className="min-h-screen bg-[#f8f8f5]">
@@ -298,6 +307,7 @@ export default function ProductContent({ product }) {
               {/* Add to Cart */}
               <button
                 type="button"
+                onClick={() => addToCart(product)}
                 disabled={product.stock === 0}
                 className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-lime-400 hover:text-black disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
               >
@@ -308,17 +318,17 @@ export default function ProductContent({ product }) {
               {/* Wishlist */}
               <button
                 type="button"
-                onClick={() => setIsWishlisted((prev) => !prev)}
+                onClick={() => toggleWishlist(product)}
                 className="rounded-full border border-gray-200 bg-white p-4 transition-all hover:border-black"
                 aria-label="Add to wishlist"
               >
                 <Heart
-                  size={19}
-                  className={
-                    isWishlisted
-                      ? "fill-red-500 text-red-500"
-                      : "text-gray-600 hover:text-red-500"
-                  }
+    size={20}
+    className={
+      wishlisted
+        ? "fill-red-500 text-red-500"
+        : "text-black"
+    }
                 />
               </button>
             </div>

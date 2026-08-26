@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-const StoreContext = createContext();
+const StoreContext = createContext(null);
 
 export function StoreProvider({ children }) {
   const [cart, setCart] = useState([]);
@@ -10,15 +10,19 @@ export function StoreProvider({ children }) {
 
   // Load saved data
   useEffect(() => {
-    const savedCart = localStorage.getItem("neo-cart");
-    const savedWishlist = localStorage.getItem("neo-wishlist");
+    try {
+      const savedCart = localStorage.getItem("neo-cart");
+      const savedWishlist = localStorage.getItem("neo-wishlist");
 
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      }
 
-    if (savedWishlist) {
-      setWishlist(JSON.parse(savedWishlist));
+      if (savedWishlist) {
+        setWishlist(JSON.parse(savedWishlist));
+      }
+    } catch (error) {
+      console.error("Failed to load store data:", error);
     }
   }, []);
 
@@ -32,22 +36,29 @@ export function StoreProvider({ children }) {
     localStorage.setItem("neo-wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
+  // =========================
+  // CART
+  // =========================
+
   const addToCart = (product) => {
-    setCart((currentCart) => {
-      const existingProduct = currentCart.find(
+    setCart((prev) => {
+      const existing = prev.find(
         (item) => item.id === product.id
       );
 
-      if (existingProduct) {
-        return currentCart.map((item) =>
+      if (existing) {
+        return prev.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+              }
             : item
         );
       }
 
       return [
-        ...currentCart,
+        ...prev,
         {
           ...product,
           quantity: 1,
@@ -57,56 +68,90 @@ export function StoreProvider({ children }) {
   };
 
   const removeFromCart = (productId) => {
-    setCart((currentCart) =>
-      currentCart.filter((item) => item.id !== productId)
+    setCart((prev) =>
+      prev.filter((item) => item.id !== productId)
     );
   };
 
   const updateQuantity = (productId, quantity) => {
-    if (quantity < 1) {
-      removeFromCart(productId);
-      return;
-    }
+    if (quantity < 1) return;
 
-    setCart((currentCart) =>
-      currentCart.map((item) =>
+    setCart((prev) =>
+      prev.map((item) =>
         item.id === productId
-          ? { ...item, quantity }
+          ? {
+              ...item,
+              quantity,
+            }
           : item
       )
     );
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  const cartTotal = cart.reduce((total, item) => {
+    const price = item.salePrice ?? item.price ?? 0;
+
+    return total + price * item.quantity;
+  }, 0);
+
+  // =========================
+  // WISHLIST
+  // =========================
+
   const toggleWishlist = (product) => {
-    setWishlist((currentWishlist) => {
-      const exists = currentWishlist.some(
+    setWishlist((prev) => {
+      const exists = prev.some(
         (item) => item.id === product.id
       );
 
       if (exists) {
-        return currentWishlist.filter(
+        return prev.filter(
           (item) => item.id !== product.id
         );
       }
 
-      return [...currentWishlist, product];
+      return [...prev, product];
     });
   };
 
   const isInWishlist = (productId) => {
-    return wishlist.some((item) => item.id === productId);
+    return wishlist.some(
+      (item) => item.id === productId
+    );
   };
+
+  const wishlistCount = wishlist.length;
+
+  // =========================
+  // PROVIDER
+  // =========================
 
   return (
     <StoreContext.Provider
       value={{
+        // Cart
         cart,
-        wishlist,
         addToCart,
         removeFromCart,
         updateQuantity,
+        clearCart,
+        cartCount,
+        cartTotal,
+
+        // Wishlist
+        wishlist,
         toggleWishlist,
         isInWishlist,
+        wishlistCount,
       }}
     >
       {children}
@@ -118,7 +163,9 @@ export function useStore() {
   const context = useContext(StoreContext);
 
   if (!context) {
-    throw new Error("useStore must be used inside StoreProvider");
+    throw new Error(
+      "useStore must be used inside StoreProvider"
+    );
   }
 
   return context;

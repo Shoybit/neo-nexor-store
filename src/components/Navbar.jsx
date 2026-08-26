@@ -1,246 +1,411 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import Container from "./Container";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  Search,
+  Heart,
+  User,
+  ShoppingBag,
+  X,
+  Minus,
+  Plus,
+  Trash2,
+} from "lucide-react";
+import { useState } from "react";
+import { useStore } from "@/context/StoreContext";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const pathname = usePathname();
+  const [activePanel, setActivePanel] = useState(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const {
+    cart,
+    wishlist,
+    removeFromCart,
+    updateQuantity,
+    toggleWishlist,
+    addToCart,
+  } = useStore();
 
-  useEffect(() => {
-    const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-      setCartCount(total);
-    };
-    updateCartCount();
-    window.addEventListener("storage", updateCartCount);
-    return () => window.removeEventListener("storage", updateCartCount);
-  }, []);
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/shop", label: "Shop" },
-    { href: "/shop?category=sneakers", label: "Sneakers" },
-    { href: "/shop?category=clothing", label: "Clothing" },
-  ];
+  const cartTotal = cart.reduce((total, item) => {
+    const price = item.salePrice || item.price;
+    return total + price * item.quantity;
+  }, 0);
 
-  const isActive = (href) => {
-    if (href === "/") return pathname === href;
-    return pathname.startsWith(href.split("?")[0]);
+  const openPanel = (panel) => {
+    setActivePanel(panel);
+  };
+
+  const closePanel = () => {
+    setActivePanel(null);
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`
-        sticky top-0 z-50 
-        transition-all duration-300 
-        ${
-          scrolled
-            ? "border-b border-gray-200/50 bg-white/95 shadow-sm backdrop-blur-lg"
-            : "bg-white/90 backdrop-blur-sm"
-        }
-      `}
-    >
-      <Container>
-        <div className="flex h-16 items-center justify-between gap-4 sm:h-18 md:gap-6">
-          {/* Mobile Menu Button */}
-          <motion.button
-            whileTap={{ scale: 0.92 }}
-            onClick={() => setOpen(!open)}
-            className="flex size-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100 lg:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={open ? "close" : "menu"}
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {open ? (
-                  <X size={20} className="text-gray-800" />
-                ) : (
-                  <Menu size={20} className="text-gray-800" />
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </motion.button>
-
+    <>
+      {/* Navbar */}
+      <header className="sticky top-0 z-40 border-b border-black/5 bg-white">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+          
           {/* Logo */}
           <Link
             href="/"
-            className="text-xl font-black tracking-[-0.06em] transition-opacity hover:opacity-80 sm:text-2xl"
+            className="text-2xl font-black tracking-[-0.06em]"
           >
-            <span className="text-gray-900">NEO</span>
-            <span className="text-lime-500">·</span>
-            <span className="text-gray-900">NEXOR</span>
+            NEO<span className="text-lime-500">•</span>NEXOR
           </Link>
 
-          {/* Desktop Navigation*/}
-          <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`
-                  relative text-sm font-medium transition-colors duration-200
-                  ${
-                    isActive(link.href)
-                      ? "text-gray-900"
-                      : "text-gray-600 hover:text-gray-900"
-                  }
-                `}
-              >
-                {link.label}
-                {isActive(link.href) && (
-                  <motion.span
-                    layoutId="active-nav-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-lime-500"
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-              </Link>
-            ))}
+          {/* Navigation */}
+          <nav className="hidden items-center gap-8 md:flex">
+            <Link
+              href="/"
+              className="text-sm font-medium text-gray-600 transition hover:text-black"
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/shop"
+              className="text-sm font-medium text-gray-600 transition hover:text-black"
+            >
+              Shop
+            </Link>
+
+            <Link
+              href="/shop?category=sneakers"
+              className="text-sm font-medium text-gray-600 transition hover:text-black"
+            >
+              Sneakers
+            </Link>
+
+            <Link
+              href="/shop?category=clothing"
+              className="text-sm font-medium text-gray-600 transition hover:text-black"
+            >
+              Clothing
+            </Link>
           </nav>
 
-          {/* Action Buttons*/}
-          <div className="flex items-center gap-0.5 sm:gap-1">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.92 }}
-              className="hidden size-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100 sm:flex"
+          {/* Actions */}
+          <div className="flex items-center gap-5">
+            <button
+              type="button"
+              className="text-gray-600 transition hover:text-black"
               aria-label="Search"
             >
-              <Search size={19} strokeWidth={1.8} className="text-gray-700" />
-            </motion.button>
+              <Search size={20} />
+            </button>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.92 }}
+            {/* Wishlist */}
+            <button
+              type="button"
+              onClick={() => openPanel("wishlist")}
+              className="relative text-gray-600 transition hover:text-black"
+              aria-label="Wishlist"
             >
-              <Link
-                href="/wishlist"
-                className="hidden size-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100 sm:flex"
-                aria-label="Wishlist"
-              >
-                <Heart size={19} strokeWidth={1.8} className="text-gray-700" />
-              </Link>
-            </motion.div>
+              <Heart size={20} />
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.92 }}
-            >
-              <Link
-                href="/account"
-                className="hidden size-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100 md:flex"
-                aria-label="Account"
-              >
-                <User size={19} strokeWidth={1.8} className="text-gray-700" />
-              </Link>
-            </motion.div>
+              {wishlist.length > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-lime-400 px-1 text-[9px] font-bold text-black">
+                  {wishlist.length}
+                </span>
+              )}
+            </button>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.92 }}
+            {/* Account */}
+            <button
+              type="button"
+              className="text-gray-600 transition hover:text-black"
+              aria-label="Account"
             >
-              <Link
-                href="/cart"
-                className="relative flex size-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
-                aria-label="Shopping bag"
-              >
-                <ShoppingBag size={20} strokeWidth={1.8} className="text-gray-700" />
-                <AnimatePresence>
-                  {cartCount > 0 && (
-                    <motion.span
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.5, opacity: 0 }}
-                      className="absolute -right-0.5 -top-0.5 flex size-4.5 items-center justify-center rounded-full bg-lime-400 text-[9px] font-bold text-white shadow-sm"
-                    >
-                      {cartCount > 9 ? "9+" : cartCount}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </Link>
-            </motion.div>
+              <User size={20} />
+            </button>
+
+            {/* Cart */}
+            <button
+              type="button"
+              onClick={() => openPanel("cart")}
+              className="relative text-gray-600 transition hover:text-black"
+              aria-label="Shopping cart"
+            >
+              <ShoppingBag size={20} />
+
+              {cartCount > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-lime-400 px-1 text-[9px] font-bold text-black">
+                  {cartCount}
+                </span>
+              )}
+            </button>
           </div>
         </div>
+      </header>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {open && (
-            <motion.nav
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="overflow-hidden border-t border-gray-200/50"
-            >
-              <div className="flex flex-col gap-1 py-4">
-                {[...navLinks, { href: "/wishlist", label: "Wishlist" }].map(
-                  (link, index) => (
-                    <motion.div
-                      key={link.href}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className={`
-                          block rounded-lg px-4 py-2.5 text-sm font-medium transition-colors
-                          ${
-                            isActive(link.href)
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                          }
-                        `}
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.div>
-                  )
-                )}
+      {/* Overlay */}
+      {activePanel && (
+        <div
+          onClick={closePanel}
+          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px]"
+        />
+      )}
 
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.25 }}
-                >
-                  <Link
-                    href="/account"
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
+      {/* Side Drawer */}
+      <aside
+        className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-300 ${
+          activePanel
+            ? "translate-x-0"
+            : "translate-x-full"
+        }`}
+      >
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between border-b border-black/10 px-6 py-5">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-black/40">
+              {activePanel === "cart"
+                ? "Your Items"
+                : "Saved Items"}
+            </p>
+
+            <h2 className="mt-1 text-xl font-black">
+              {activePanel === "cart"
+                ? "Shopping Cart"
+                : "Wishlist"}
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            onClick={closePanel}
+            className="rounded-full p-2 transition hover:bg-black/5"
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Wishlist */}
+        {activePanel === "wishlist" && (
+          <div className="flex-1 overflow-y-auto p-6">
+            {wishlist.length === 0 ? (
+              <EmptyState
+                icon={<Heart size={24} />}
+                title="Your wishlist is empty"
+                description="Save products you love and find them here later."
+                onClose={closePanel}
+              />
+            ) : (
+              <div className="space-y-5">
+                {wishlist.map((product) => (
+                  <div
+                    key={product.id}
+                    className="flex gap-4 border-b border-black/5 pb-5"
                   >
-                    Account
-                  </Link>
-                </motion.div>
+                    <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-[#f3f3ee]">
+                      <img
+                        src={product.thumbnail || product.image}
+                        alt={product.name}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-black/40">
+                        {product.category}
+                      </p>
+
+                      <h3 className="mt-1 line-clamp-2 text-sm font-bold">
+                        {product.name}
+                      </h3>
+
+                      <p className="mt-2 font-bold">
+                        ${product.salePrice || product.price}
+                      </p>
+
+                      <div className="mt-3 flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            addToCart(product);
+                            toggleWishlist(product);
+                          }}
+                          className="rounded-full bg-black px-4 py-2 text-xs font-semibold text-white transition hover:bg-lime-400 hover:text-black"
+                        >
+                          Add to Cart
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => toggleWishlist(product)}
+                          className="text-xs font-medium text-black/40 hover:text-red-500"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
-      </Container>
-    </motion.header>
+            )}
+          </div>
+        )}
+
+        {/* Cart */}
+        {activePanel === "cart" && (
+          <>
+            <div className="flex-1 overflow-y-auto p-6">
+              {cart.length === 0 ? (
+                <EmptyState
+                  icon={<ShoppingBag size={24} />}
+                  title="Your cart is empty"
+                  description="Add some products and they will appear here."
+                  onClose={closePanel}
+                />
+              ) : (
+                <div className="space-y-5">
+                  {cart.map((product) => {
+                    const productPrice =
+                      product.salePrice || product.price;
+
+                    return (
+                      <div
+                        key={product.id}
+                        className="flex gap-4 border-b border-black/5 pb-5"
+                      >
+                        <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-[#f3f3ee]">
+                          <img
+                            src={
+                              product.thumbnail ||
+                              product.image
+                            }
+                            alt={product.name}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[10px] font-medium uppercase tracking-wider text-black/40">
+                            {product.category}
+                          </p>
+
+                          <h3 className="mt-1 line-clamp-2 text-sm font-bold">
+                            {product.name}
+                          </h3>
+
+                          <p className="mt-2 text-sm font-bold">
+                            ${productPrice}
+                          </p>
+
+                          {/* Quantity */}
+                          <div className="mt-3 flex items-center justify-between">
+                            <div className="flex items-center rounded-full border border-black/10">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  updateQuantity(
+                                    product.id,
+                                    product.quantity - 1
+                                  )
+                                }
+                                className="p-2 text-black/50 hover:text-black"
+                              >
+                                <Minus size={13} />
+                              </button>
+
+                              <span className="min-w-7 text-center text-xs font-semibold">
+                                {product.quantity}
+                              </span>
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  updateQuantity(
+                                    product.id,
+                                    product.quantity + 1
+                                  )
+                                }
+                                className="p-2 text-black/50 hover:text-black"
+                              >
+                                <Plus size={13} />
+                              </button>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                removeFromCart(product.id)
+                              }
+                              className="text-black/30 transition hover:text-red-500"
+                              aria-label="Remove product"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Cart Footer */}
+            {cart.length > 0 && (
+              <div className="border-t border-black/10 p-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-black/50">
+                    Subtotal
+                  </span>
+
+                  <span className="text-xl font-black">
+                    ${cartTotal.toFixed(2)}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  className="mt-5 w-full rounded-full bg-black py-3.5 text-sm font-semibold text-white transition hover:bg-lime-400 hover:text-black"
+                >
+                  Checkout
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </aside>
+    </>
+  );
+}
+
+/* Empty State */
+function EmptyState({
+  icon,
+  title,
+  description,
+  onClose,
+}) {
+  return (
+    <div className="flex h-full flex-col items-center justify-center text-center">
+      <div className="rounded-full bg-black/5 p-4 text-black/40">
+        {icon}
+      </div>
+
+      <h3 className="mt-5 text-lg font-bold">
+        {title}
+      </h3>
+
+      <p className="mt-2 max-w-xs text-sm leading-6 text-black/40">
+        {description}
+      </p>
+
+      <Link
+        href="/shop"
+        onClick={onClose}
+        className="mt-6 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-lime-400 hover:text-black"
+      >
+        Continue Shopping
+      </Link>
+    </div>
   );
 }

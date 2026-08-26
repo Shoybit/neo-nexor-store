@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Heart, ShoppingBag, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useStore } from "@/context/StoreContext";
 
 export default function ProductCard({ product }) {
   const {
@@ -21,9 +22,15 @@ export default function ProductCard({ product }) {
     isOnSale,
   } = product;
 
-  const [isWishlisted, setIsWishlisted] = useState(false);
-
   const currentPrice = salePrice ?? price;
+  
+  const {
+    addToCart,
+    toggleWishlist,
+    isInWishlist,
+  } = useStore();
+
+  const wishlisted = isInWishlist(product.id);
 
   return (
     <motion.div
@@ -45,40 +52,38 @@ export default function ProductCard({ product }) {
           {/* Badges */}
           <div className="absolute left-3 top-3 flex flex-col gap-1.5">
             {isNew && (
-              <span className="rounded-full bg-black px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+              <span className="rounded-full bg-black px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
                 New
               </span>
             )}
-
             {isOnSale && salePrice && (
-              <span className="rounded-full bg-lime-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black">
+              <span className="rounded-full bg-lime-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black shadow-sm">
                 Sale
               </span>
             )}
           </div>
+
+          {/* Wishlist Button - on Image */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleWishlist(product);
+            }}
+            className="absolute right-3 top-3 rounded-full bg-white/80 p-2 backdrop-blur transition-all hover:bg-white hover:shadow-md"
+            aria-label="Add to wishlist"
+          >
+            <Heart
+              size={16}
+              className={
+                wishlisted
+                  ? "fill-red-500 text-red-500"
+                  : "text-gray-600 hover:text-red-500"
+              }
+            />
+          </button>
         </div>
       </Link>
-
-      {/* Wishlist */}
-      <button
-        type="button"
-        onClick={() => setIsWishlisted((prev) => !prev)}
-        className="absolute right-3 top-3 rounded-full bg-white/90 p-2.5 backdrop-blur transition-all hover:bg-white hover:shadow-md"
-        aria-label={
-          isWishlisted
-            ? `Remove ${name} from wishlist`
-            : `Add ${name} to wishlist`
-        }
-      >
-        <Heart
-          size={16}
-          className={
-            isWishlisted
-              ? "fill-red-500 text-red-500"
-              : "text-gray-600"
-          }
-        />
-      </button>
 
       {/* Content */}
       <div className="p-4">
@@ -87,17 +92,14 @@ export default function ProductCard({ product }) {
           <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
             {category}
           </p>
-
           <div className="flex shrink-0 items-center gap-1">
             <Star
               size={13}
               className="fill-lime-400 text-lime-400"
             />
-
             <span className="text-sm font-semibold text-black">
               {rating}
             </span>
-
             <span className="text-xs text-gray-400">
               ({reviewCount})
             </span>
@@ -116,7 +118,6 @@ export default function ProductCard({ product }) {
           <span className="text-lg font-bold text-black">
             ${currentPrice}
           </span>
-
           {salePrice && (
             <span className="text-sm text-gray-400 line-through">
               ${price}
@@ -124,9 +125,10 @@ export default function ProductCard({ product }) {
           )}
         </div>
 
-        {/* Add to Cart */}
+        {/* Add to Cart Button */}
         <button
           type="button"
+          onClick={() => addToCart(product)}
           className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-black py-2.5 text-sm font-semibold text-white transition-all hover:bg-lime-400 hover:text-black"
         >
           <ShoppingBag size={16} />
