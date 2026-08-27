@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Heart, ShoppingBag, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useStore } from "@/context/StoreContext";
 
 export default function ProductCard({ product }) {
@@ -23,7 +24,7 @@ export default function ProductCard({ product }) {
   } = product;
 
   const currentPrice = salePrice ?? price;
-  
+
   const {
     addToCart,
     toggleWishlist,
@@ -31,6 +32,11 @@ export default function ProductCard({ product }) {
   } = useStore();
 
   const wishlisted = isInWishlist(product.id);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    toast.success("Added to cart");
+  };
 
   return (
     <motion.div
@@ -56,6 +62,7 @@ export default function ProductCard({ product }) {
                 New
               </span>
             )}
+
             {isOnSale && salePrice && (
               <span className="rounded-full bg-lime-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black shadow-sm">
                 Sale
@@ -63,7 +70,7 @@ export default function ProductCard({ product }) {
             )}
           </div>
 
-          {/* Wishlist Button - on Image */}
+          {/* Wishlist Button */}
           <button
             type="button"
             onClick={(e) => {
@@ -92,14 +99,17 @@ export default function ProductCard({ product }) {
           <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
             {category}
           </p>
+
           <div className="flex shrink-0 items-center gap-1">
             <Star
               size={13}
               className="fill-lime-400 text-lime-400"
             />
+
             <span className="text-sm font-semibold text-black">
               {rating}
             </span>
+
             <span className="text-xs text-gray-400">
               ({reviewCount})
             </span>
@@ -118,6 +128,7 @@ export default function ProductCard({ product }) {
           <span className="text-lg font-bold text-black">
             ${currentPrice}
           </span>
+
           {salePrice && (
             <span className="text-sm text-gray-400 line-through">
               ${price}
@@ -128,7 +139,7 @@ export default function ProductCard({ product }) {
         {/* Add to Cart Button */}
         <button
           type="button"
-          onClick={() => addToCart(product)}
+          onClick={handleAddToCart}
           className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-black py-2.5 text-sm font-semibold text-white transition-all hover:bg-lime-400 hover:text-black"
         >
           <ShoppingBag size={16} />

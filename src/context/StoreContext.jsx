@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-
+import ordersData from "../../database/orders.json"
 const StoreContext = createContext(null);
 
 export function StoreProvider({ children }) {
@@ -10,7 +10,10 @@ export function StoreProvider({ children }) {
   const [orders, setOrders] = useState([]);
   const [hydrated, setHydrated] = useState(false);
 
-  // Load saved data
+  // =========================
+  // LOAD SAVED DATA
+  // =========================
+
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem("neo-cart");
@@ -27,22 +30,34 @@ export function StoreProvider({ children }) {
 
       if (savedOrders) {
         setOrders(JSON.parse(savedOrders));
+      } else {
+        // First load → use demo orders from orders.json
+        setOrders(ordersData);
       }
     } catch (error) {
       console.error("Failed to load store data:", error);
+
+      // Fallback to demo orders
+      setOrders(ordersData);
     } finally {
       setHydrated(true);
     }
   }, []);
 
-  // Save cart
+  // =========================
+  // SAVE CART
+  // =========================
+
   useEffect(() => {
     if (!hydrated) return;
 
     localStorage.setItem("neo-cart", JSON.stringify(cart));
   }, [cart, hydrated]);
 
-  // Save wishlist
+  // =========================
+  // SAVE WISHLIST
+  // =========================
+
   useEffect(() => {
     if (!hydrated) return;
 
@@ -52,7 +67,10 @@ export function StoreProvider({ children }) {
     );
   }, [wishlist, hydrated]);
 
-  // Save orders
+  // =========================
+  // SAVE ORDERS
+  // =========================
+
   useEffect(() => {
     if (!hydrated) return;
 
@@ -124,7 +142,9 @@ export function StoreProvider({ children }) {
   );
 
   const cartTotal = cart.reduce((total, item) => {
-    const price = Number(item.salePrice ?? item.price ?? 0);
+    const price = Number(
+      item.salePrice ?? item.price ?? 0
+    );
 
     return total + price * item.quantity;
   }, 0);
@@ -168,12 +188,14 @@ export function StoreProvider({ children }) {
       return null;
     }
 
+    const orderDate = new Date().toISOString();
+
     const order = {
       id: `NX-${Date.now()
         .toString()
         .slice(-8)}`,
 
-      date: new Date().toISOString(),
+      date: orderDate,
 
       status: "Pending",
 
@@ -192,9 +214,38 @@ export function StoreProvider({ children }) {
 
       shipping: cartTotal >= 100 ? 0 : 10,
 
-      total: cartTotal >= 100
-        ? cartTotal
-        : cartTotal + 10,
+      total:
+        cartTotal >= 100
+          ? cartTotal
+          : cartTotal + 10,
+
+      timeline: [
+        {
+          status: "Order Placed",
+          date: orderDate,
+          completed: true,
+        },
+        {
+          status: "Confirmed",
+          date: null,
+          completed: false,
+        },
+        {
+          status: "Shipped",
+          date: null,
+          completed: false,
+        },
+        {
+          status: "Out for Delivery",
+          date: null,
+          completed: false,
+        },
+        {
+          status: "Delivered",
+          date: null,
+          completed: false,
+        },
+      ],
     };
 
     setOrders((prev) => [order, ...prev]);
@@ -208,6 +259,27 @@ export function StoreProvider({ children }) {
   const getOrderById = (orderId) => {
     return orders.find(
       (order) => order.id === orderId
+    );
+  };
+
+  // =========================
+  // UPDATE ORDER STATUS
+  // =========================
+
+  const updateOrderStatus = (orderId, status) => {
+    setOrders((prev) =>
+      prev.map((order) =>
+        order.id === orderId
+          ? {
+              ...order,
+              status,
+              timeline: buildTimeline(
+                status,
+                order.timeline
+              ),
+            }
+          : order
+      )
     );
   };
 
@@ -236,12 +308,64 @@ export function StoreProvider({ children }) {
         orders,
         placeOrder,
         getOrderById,
+        updateOrderStatus,
       }}
     >
       {children}
     </StoreContext.Provider>
   );
 }
+
+// =========================
+// BUILD ORDER TIMELINE
+// =========================
+
+function buildTimeline(
+  status,
+  existingTimeline = []
+) {
+  const steps = [
+    "Order Placed",
+    "Confirmed",
+    "Shipped",
+    "Out for Delivery",
+    "Delivered",
+  ];
+
+  const statusIndex = {
+    Pending: 2,
+    Confirmed: 2,
+    Shipped: 3,
+    "Out for Delivery": 4,
+    Delivered: 5,
+  };
+
+  const completedUntil =
+    statusIndex[status] ?? 2;
+
+  return steps.map((step, index) => {
+    const existing = existingTimeline.find(
+      (item) => item.status === step
+    );
+
+    return {
+      status: step,
+
+      date:
+        index < completedUntil
+          ? existing?.date ||
+            new Date().toISOString()
+          : null,
+
+      completed:
+        index < completedUntil,
+    };
+  });
+}
+
+// =========================
+// USE STORE
+// =========================
 
 export function useStore() {
   const context = useContext(StoreContext);

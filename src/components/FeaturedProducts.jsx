@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Heart, ShoppingBag } from "lucide-react";
+import toast from "react-hot-toast";
 import products from "../../database/products.json";
 import { useStore } from "@/context/StoreContext";
 
@@ -10,8 +11,16 @@ export default function FeaturedProducts() {
   const { addToCart, toggleWishlist, isInWishlist } = useStore();
 
   const featuredProducts = products
-    .filter((product) => product.featured && product.status === "active")
+    .filter(
+      (product) =>
+        product.featured && product.status === "active"
+    )
     .slice(0, 4);
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    toast.success("Added to cart");
+  };
 
   return (
     <section className="bg-white px-6 py-20 md:px-10 lg:px-16">
@@ -36,20 +45,29 @@ export default function FeaturedProducts() {
         {/* Product Grid */}
         {featuredProducts.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-
             {featuredProducts.map((product) => {
-              const price = product.salePrice || product.price;
-              const hasSale = product.salePrice !== null;
+              const price =
+                product.salePrice || product.price;
+
+              const hasSale =
+                product.salePrice !== null;
 
               return (
-                <div key={product.id} className="group">
-
+                <div
+                  key={product.id}
+                  className="group"
+                >
                   {/* Image */}
                   <div className="relative aspect-4/5 overflow-hidden rounded-2xl bg-[#f3f3ee]">
 
-                    <Link href={`/product/${product.slug}`}>
+                    <Link
+                      href={`/product/${product.slug}`}
+                    >
                       <img
-                        src={product.thumbnail || product.images?.[0]}
+                        src={
+                          product.thumbnail ||
+                          product.images?.[0]
+                        }
                         alt={product.name}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                       />
@@ -65,7 +83,9 @@ export default function FeaturedProducts() {
                     {/* Wishlist */}
                     <button
                       type="button"
-                      onClick={() => toggleWishlist(product)}
+                      onClick={() =>
+                        toggleWishlist(product)
+                      }
                       className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 shadow-sm transition hover:scale-105"
                       aria-label="Add to wishlist"
                     >
@@ -82,7 +102,9 @@ export default function FeaturedProducts() {
                     {/* Add to Cart */}
                     <button
                       type="button"
-                      onClick={() => addToCart(product)}
+                      onClick={() =>
+                        handleAddToCart(product)
+                      }
                       className="absolute bottom-3 left-3 right-3 flex items-center justify-center gap-2 rounded-full bg-black py-3 text-xs font-semibold text-white opacity-0 transition duration-300 hover:bg-lime-400 hover:text-black group-hover:opacity-100"
                     >
                       <ShoppingBag size={15} />
@@ -92,12 +114,13 @@ export default function FeaturedProducts() {
 
                   {/* Product Info */}
                   <div className="pt-4">
-
                     <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.18em] text-gray-400">
                       {product.category}
                     </p>
 
-                    <Link href={`/product/${product.slug}`}>
+                    <Link
+                      href={`/product/${product.slug}`}
+                    >
                       <h3 className="line-clamp-1 text-sm font-semibold text-black transition hover:text-lime-600">
                         {product.name}
                       </h3>
@@ -114,12 +137,10 @@ export default function FeaturedProducts() {
                         </span>
                       )}
                     </div>
-
                   </div>
                 </div>
               );
             })}
-
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-gray-200 py-16 text-center">
@@ -139,7 +160,6 @@ export default function FeaturedProducts() {
             <ArrowUpRight size={16} />
           </Link>
         </div>
-
       </div>
     </section>
   );

@@ -131,7 +131,7 @@ export default function OrdersPage() {
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-400">
-                      {formatDate(order.date)}
+                      {formatDate(order.date || order.createdAt)}
                     </p>
                   </div>
 
@@ -242,12 +242,17 @@ function StatusBadge({ status }) {
 }
 
 function formatDate(date) {
-  return new Date(date).toLocaleDateString(
-    "en-US",
-    {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }
-  );
+  if (!date) return "No date";
+
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    return "No date";
+  }
+
+  return parsedDate.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
