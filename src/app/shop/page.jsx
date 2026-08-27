@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Search, X, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,16 +11,27 @@ import ProductCard from "@/components/ProductCard";
 import { getAllProducts, getAllCategories, getAllBrands } from "@/lib/data";
 
 export default function ShopPage() {
-  const products = getAllProducts();
-  const categories = getAllCategories();
-  const brands = getAllBrands();
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("all");
-  const [brand, setBrand] = useState("all");
-  const [sort, setSort] = useState("featured");
-  const [maxPrice, setMaxPrice] = useState(300);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  const searchParams = useSearchParams();
+
+const products = getAllProducts();
+const categories = getAllCategories();
+const brands = getAllBrands();
+
+const [search, setSearch] = useState("");
+const [category, setCategory] = useState("all");
+const [brand, setBrand] = useState("all");
+const [sort, setSort] = useState("featured");
+const [maxPrice, setMaxPrice] = useState(300);
+const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+useEffect(() => {
+  const categoryFromUrl = searchParams.get("category");
+
+  setCategory(categoryFromUrl || "all");
+}, [searchParams]);
+
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
