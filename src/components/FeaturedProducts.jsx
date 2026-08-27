@@ -47,7 +47,7 @@ export default function FeaturedProducts() {
                   {/* Image */}
                   <div className="relative aspect-4/5 overflow-hidden rounded-2xl bg-[#f3f3ee]">
 
-                    <Link href={`/shop/${product.slug}`}>
+                    <Link href={`/product/${product.slug}`}>
                       <img
                         src={product.thumbnail || product.images?.[0]}
                         alt={product.name}
@@ -97,7 +97,7 @@ export default function FeaturedProducts() {
                       {product.category}
                     </p>
 
-                    <Link href={`/shop/${product.slug}`}>
+                    <Link href={`/product/${product.slug}`}>
                       <h3 className="line-clamp-1 text-sm font-semibold text-black transition hover:text-lime-600">
                         {product.name}
                       </h3>
